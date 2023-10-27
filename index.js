@@ -44,7 +44,7 @@ const server = app.listen(port,()=>{
 const io = require('socket.io')(server,{
     pingTimeout : 60000,                    //close the connection 
     cors : {
-        origin : "http://localhost:5173",
+        origin : "*",
     }
 });
 
