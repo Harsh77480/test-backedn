@@ -39,7 +39,9 @@ try{
                     if(userCode){
                         const cleared = await clearRecord(userCode,User.name); 
                         if(cleared){
-                            console.log("game dont exist");
+                            //uncomment for error detection 
+                            // console.log("game dont exist");
+                            socket.emit("error","game dont exist")
                             return ;
                         }
                     }
@@ -55,10 +57,10 @@ try{
                             await user.findById(decoded.id).updateOne({contest : Code,score : 0});
                             socket.join(Code);
                             socket.emit("joined",Code);
-                            console.log("entered existing contest ",Code);
+                            // console.log("entered existing contest ",Code);
                             
                         }else{
-                            console.log("no such room");
+                            // console.log("no such room");
                             socket.emit("error","no such room");
                             return ;
                         }
@@ -68,7 +70,9 @@ try{
                         await user.findById(decoded.id).updateOne({contest : newContest.code,score : 0});
                         socket.join(newContest.code);
                         socket.emit("joined",newContest.code);
-                        console.log("created new room", newContest.code);
+                        //uncomment for error detection 
+                        // console.log("created new room", newContest.code);
+
                         // setTimeout(()=>{
                         //  clearRecord(newContest.code);
                         // },60000);
@@ -215,7 +219,7 @@ try{
                                         gameMessage(code,FinalMessage);
 
                                     }).catch((err)=>{
-                                        console.log(err);
+                                        // console.log(err);
                                         socket.emit("error","Contest ended player left");
                                         socket.to(code).emit("error","Contest ended player left");
                                     }).finally(()=>{
@@ -245,7 +249,7 @@ try{
             })
 
         }catch(err){
-            console.log(err);
+            // console.log(err);
         }
 
     
