@@ -147,17 +147,48 @@ try{
                             return new Promise( async(resolve,reject)=>{
 
                         // const exec = async  (Code,Size) =>{ //
-
+                        
                             gameMessage(Code,"Game Started");
                             const clients = await io.sockets.adapter.rooms.get(Code);
                             const players = [...clients]
-                            let words = ['corrot','dragon','windmill','peacock','tiger','fireman','rocket'];
+                            // let words = ['corrot','dragon','windmill','peacock','tiger','fireman','rocket'];
+                            const words = [
+                                "Cat",
+                                "Pirate",
+                                "Dinosaur",
+                                "Ocean",
+                                "Robot",
+                                "Jungle",
+                                "Space",
+                                "Butterfly",
+                                "Superhero",
+                                "Castle",
+                                "Rocket",
+                                "Unicorn",
+                                "Monster",
+                                "Rainbow",
+                                "Tree",
+                                "Firetruck",
+                                "Mermaid",
+                                "Cupcake",
+                                "Snowman",
+                                "Balloon",
+                                "Zoo",
+                                "Clown",
+                                "Dragon",
+                                "Garden",
+                                "Fairy",
+                                "Elephant",
+                                "Bicycle"
+                              ];
+
                             let ind = 0;let round = 1;
                             // players++;
 
 
                             //round 1
-                            let currWord = words[ind];
+                            let wordIndex =  Math.floor(Math.random() * words.length);
+                            let currWord = words[wordIndex];
                             gameMessage(Code,"ROUND : " + round);
                             gameMessage(players[ind],"Its your Turn Draw : " + currWord);
                             const res = await newGame.updateOne({code : Code},{currPlayer : players[ind] , currWord : words[ind] , currRound : round })
@@ -176,10 +207,11 @@ try{
 
                                 //round
                                 ind = (ind + 1) % Size;
-                                currWord = words[ind];
+                                wordIndex =  Math.floor(Math.random() * words.length);
+                                currWord = words[wordIndex];
                                 gameMessage(Code,"ROUND : " + round + " Guess The Drawing");
                                 gameMessage(players[ind],"Its your Turn Draw : " + currWord);
-                                const res = await newGame.updateOne({code : Code},{currPlayer : players[ind] , currWord : words[ind] , currRound : round })
+                                const res = await newGame.updateOne({code : Code},{currPlayer : players[ind] , currWord : words[wordIndex] , currRound : round })
                                 // console.log(res);
 
 
