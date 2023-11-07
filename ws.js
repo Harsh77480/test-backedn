@@ -94,7 +94,7 @@ try{
                             //  socket.to(data.roomCode).emit("broadcast",data.message);
                             //  socket.emit("broadcast",data.message);//for self 
                                 gameMessage(game.currPlayer, ` ${User.name} Thinks its ${data.message} `);
-                                if(data.message === game.currWord){
+                                if(data.message.replace(/\s/g, "").toLowerCase() === game.currWord.toLowerCase()){
                                     if(dontRepeat != game.currRound){
                                         // await user.findOne(contest)
                                         const thisUser = await user.findById(decoded.id);
@@ -248,7 +248,9 @@ try{
                                             FinalMessage += e.name + " ";
                                         })
                                         
-                                        gameMessage(code,FinalMessage);
+                                        // gameMessage(code,FinalMessage);
+                                        socket.emit("error",FinalMessage);
+                                        socket.to(code).emit("error",FinalMessage);
 
                                     }).catch((err)=>{
                                         // console.log(err);
